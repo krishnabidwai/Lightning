@@ -1,0 +1,40 @@
+<aura:component controller="Paginationcontroller" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
+	<ltng:require styles="/resource/Lightningcss/assets/styles/salesforce-lightning-design-system.css" afterScriptsLoaded="{!c.doInit}"/>
+    
+    <aura:attribute name="listSize" type="Integer" default="50" />
+    <aura:attribute name="opportunityListWrapper" type="opportunityWrapper" />
+    
+    <br /><br />
+    <table class="slds-table slds-table--bordered slds-table--striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>StageName</th>
+            </tr>
+        </thead>
+        <aura:iteration items="{!v.opportunityListWrapper.lstOpportunity}" var="oppty">
+        <tbody>
+            <tr>
+                <td>{!oppty.Name}</td>                 
+                <td>{!oppty.StageName}</td>
+      		</tr>
+        </tbody>
+    </aura:iteration>
+    </table>
+    <br /><br />
+    <center>  
+        <p>Page&nbsp;
+     		<ui:outputText aura:id="pageNumber" value="{!v.opportunityListWrapper.pageNumber}"/> 
+            / {!v.opportunityListWrapper.totalPages}&nbsp;       
+            <aura:if isTrue="{!equals(v.opportunityListWrapper.hasPreviousSet , true)}">
+            	<ui:button class="slds-button slds-button--neutral" aura:id="prev" label="Previous" 
+                           press="{!c.getPreviousPage}"/>
+            </aura:if>
+            
+            <aura:if isTrue="{!equals(v.opportunityListWrapper.hasNextSet , true)}">
+            	<ui:button class="slds-button slds-button--neutral" aura:id="next" label="Next" 
+                           press="{!c.getNextPage}"/>
+            </aura:if>
+        </p>      
+    </center>
+</aura:component>

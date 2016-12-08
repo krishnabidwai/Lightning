@@ -1,0 +1,53 @@
+({
+	getOpportunityList: function(component, event, helper) {
+        var self = this;
+        var action = component.get("c.getOpportunities");
+      
+		action.setParams({
+           
+            listSize: component.get("v.listSize"),
+        });
+		action.setCallback(this, function(actionResult) {
+           
+            var opportunityListWrapper = actionResult.getReturnValue();
+            component.set("v.opportunityListWrapper", opportunityListWrapper);
+		});
+        $A.enqueueAction(action);
+    },
+    
+    getNextPage: function(component, event, helper) {
+        
+        var action = component.get("c.nextPage");
+        action.setParams({
+            listSize: component.get("v.opportunityListWrapper").listSizeValue,
+            pageNumber : component.get("v.opportunityListWrapper").pageNumber,
+        });
+		action.setCallback(this, function(actionResult) {
+            var opportunityListWrapper = actionResult.getReturnValue();
+			component.set("v.opportunityListWrapper", opportunityListWrapper);
+           
+          //  var pageNumberComp = this.component.find("pageNumber");
+           // pageNumberComp.set("v.value",opportunityListWrapper.pageNumber);
+
+        });
+	  $A.enqueueAction(action);
+    },
+    
+    getPreviousPage: function(component, event, helper) {
+        
+        var action = component.get("c.previousPage");
+        action.setParams({
+            listSize: component.get("v.opportunityListWrapper").listSizeValue,
+        	pageNumber : component.get("v.opportunityListWrapper").pageNumber,
+        });
+		action.setCallback(this, function(actionResult) {
+            var opportunityListWrapper = actionResult.getReturnValue();
+			component.set("v.opportunityListWrapper", opportunityListWrapper);
+           
+          //  var pageNumberComp = this.component.find("pageNumber");
+          //  pageNumberComp.set("v.value",opportunityListWrapper.pageNumber); 
+		});
+	  $A.enqueueAction(action);
+    }
+
+})

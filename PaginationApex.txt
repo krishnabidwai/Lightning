@@ -1,0 +1,51 @@
+global class Paginationcontroller {
+	
+    @AuraEnabled
+    global static opportunityWrapper getOpportunities(Integer listSize){
+        
+        String strQuery = 'Select Name, StageName From Opportunity limit 20';
+        
+        return new opportunityWrapper(strQuery, 5);
+    }
+    
+    @AuraEnabled
+    global static opportunityWrapper nextPage(Integer listSize, Integer pageNumber) {
+        
+        System.debug('listSize: '+listSize);
+        System.debug('pageNumber: '+pageNumber);
+        
+        Integer listSizeValue = listSize != null ? Integer.valueOf(listSize) : 50;
+        Integer pageNumberValue = pageNumber != null ? Integer.valueOf(pageNumber) : 1;
+    
+        opportunityWrapper ilw = getOpportunities(listSizeValue);
+        ilw.pageNumber = pageNumberValue;
+        
+        ilw.nextPage();
+        
+        System.debug('ilw: '+ilw);
+        
+        return ilw;
+        
+    }
+    
+    @AuraEnabled
+    global static opportunityWrapper previousPage(Integer listSize,Integer pageNumber) {
+        
+        
+        System.debug('listSize: '+listSize);
+        System.debug('pageNumber: '+pageNumber);
+        
+        Integer listSizeValue = listSize != null ? Integer.valueOf(listSize) : 50;
+        Integer pageNumberValue = pageNumber != null ? Integer.valueOf(pageNumber) : 1;
+        
+        opportunityWrapper ilw = getOpportunities(listSizeValue);
+        ilw.pageNumber = pageNumberValue;
+        
+        ilw.previousPage();
+        
+        System.debug('ilw: '+ilw);
+        
+        return ilw;
+        
+    }
+}

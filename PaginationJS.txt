@@ -1,0 +1,19 @@
+({
+	doInit : function(component, event, helper) {
+        
+        helper.getOpportunityList(component, event, helper);
+	},
+    
+    getNextPage : function(component, event, helper) {
+        console.log('===NextPage===');
+        helper.getNextPage(component, event);
+        console.log('===NextPage===');
+	},
+
+    getPreviousPage : function(component, event, helper) {
+        
+         console.log('===PreviousPage===');
+         helper.getPreviousPage(component, event);
+         console.log('===PreviousPage===');
+	}
+})
